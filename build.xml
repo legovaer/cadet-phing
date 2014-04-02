@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<project name="CADET" default="debug" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
+    <target name="debug">
+        <echo>Setting up a temporary Drupal environment</echo>
+    </target>
+</project>
