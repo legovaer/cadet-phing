@@ -33,6 +33,7 @@
 
     <target name="load-properties">
         <property file="default.properties"/>
+        <property name="project-hash" value=""/>
         <phingcall target="generate-hash">
             <property name="hash.size" value="8"/>
         </phingcall>
