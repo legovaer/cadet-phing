@@ -29,6 +29,7 @@
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
         <echo>Setting up a temporary Drupal environment</echo>
         <!--<phingcall target="setup-docroot"/>-->
+        <echo>${instance.name}</echo>
         <phingcall target="setup-database"/>
     </target>
 
