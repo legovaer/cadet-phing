@@ -49,6 +49,7 @@
             </then>
         </if>
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, ${hash.size})" returnProperty="project.hash"/>
+        <echo>${project.hash} called from generate-hash</echo>
     </target>
 
     <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
