@@ -32,6 +32,7 @@
     </target>
 
     <target name="load-properties">
+        <taskdef name="randomString" classname="src.PlatinumPixs.RandomString.GenerateTask" />
         <property file="default.properties"/>
         <property name="project-hash" value=""/>
         <phingcall target="generate-hash">
@@ -40,6 +41,8 @@
         <property name="instance.name" value="${project.hash}"/>
         <echo>${instance.name}</echo>
         <echo>${project.hash}</echo>
+        <randomString name="variableName" length="8" stringType="uppercase_numeric" />
+        <echo>${variableName} varname</echo>
     </target>
 
     <target name="generate-hash">
