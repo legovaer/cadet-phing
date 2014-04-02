@@ -37,7 +37,7 @@
         <randomString name="instance.name" length="8" stringType="lowercase_numeric" />
     </target>
 
-    <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
+    <target name="install-drupal" depends="setup-docroot, setup-database, load-properties, drush-init">
         <property name="drupal.username" value="admin"/>
         <randomString name="drupal.password" length="10"/>
 
