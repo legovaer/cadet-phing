@@ -40,7 +40,7 @@
                 <replaceregexp>
                     <regexp pattern="####" replace="${instance.mysql.database}" ignoreCase="true" />
                     <regexp pattern="@@@@" replace="${instance.name}" ignoreCase="true" />
-                    <regexp pattern="&&&&" replace="${instance.mysl.password}" ignoreCase="true" />
+                    <regexp pattern="#@#@" replace="${instance.mysl.password}" ignoreCase="true" />
                 </replaceregexp>
             </filterchain>
         </copy>
