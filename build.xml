@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="CADET" default="init" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
+<project name="CADET" default="load-properties" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
 
     <target name="init" depends="load-properties, get-drupal-version, install-drupal" unless="project.initialized">
@@ -37,6 +37,7 @@
             <property name="hash.size" value="8"/>
         </phingcall>
         <property name="instance.name" value="${project.hash}"/>
+        <echo>${instance.name}</echo>
     </target>
 
     <target name="generate-hash">
@@ -96,7 +97,7 @@
             </fileset>
         </copy>
         <chown file="${instance.docroot}" user="nobody" group="nogroup" />
-        <copy file="virtualhost.conf" tofile="/etc/apache2/site-available/CADET-${instance.name}" overwrite="true">
+        <copy file="virtualhost.conf" tofile="/etc/apache2/sites-available/CADET-${instance.name}" overwrite="true">
             <filterchain>
                 <replaceregexp>
                     <regexp pattern="####" replace="${instance.domain}" ignoreCase="true" />
