@@ -49,7 +49,10 @@
                 <property name="hash.size" value="8"/>
             </then>
         </if>
-        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, ${hash.size})" outputProperty="project.hash"/>
+        <exec executable="php" outputProperty="project.hash">
+            <arg value="-r" />
+            <arg value="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, ${hash.size})"/>
+        </exec>
         <echo>${project.hash} called from generate-hash</echo>
     </target>
 
