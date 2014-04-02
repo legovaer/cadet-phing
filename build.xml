@@ -27,6 +27,8 @@
                 </if>
             </else>
         </if>
+        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
+        <echo>Output instance name: ${instance.name}</echo>
         <echo>Setting up a temporary Drupal environment</echo>
     </target>
 
