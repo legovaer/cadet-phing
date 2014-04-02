@@ -52,7 +52,7 @@
     </target>
 
     <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
-        <phingcall target="generate-hash">
+        <phingcall inheritRefs="true" target="generate-hash">
             <property name="hash.size" value="10"/>
         </phingcall>
 
