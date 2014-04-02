@@ -3,7 +3,7 @@
 <project name="CADET" default="debug" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
     <property name="drupal.install.dir" value="/var/lib/drupal"/>
-    <property name="drupal.version" value="7.26" />
+    <property name="drupal.version" value="7.24" />
 
     <target name="debug">
         <exec command="ls ${drupal.install.dir} | sort -r | head -1" outputProperty="drupal.latest.version"/>
