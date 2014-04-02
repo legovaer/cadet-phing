@@ -3,16 +3,27 @@
 <project name="CADET" default="debug" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
     <property name="drupal.install.dir" value="/var/lib/drupal"/>
+    <property name="drupal.version" value="" />
 
     <target name="debug">
         <exec command="ls ${drupal.install.dir} | sort -r | head -1" outputProperty="drupal.latest.version"/>
-        <echo>Output of exec is ${drupal.latest.version}</echo>
-        <property name="drupal.version" value="" />
         <if>
             <equals arg1="${drupal.version}" arg2="" />
             <then>
-                <echo>No Drupal version speicified. The latest available version, found on this server, will be used.</echo>
+                <property name="drupal.directory" value="${drupal.install.dir}/${drupal.latest.version}"/>
+                <echo>No Drupal version speicified. The latest available version, found on this server, will be used. (${drupal.directory})</echo>
             </then>
+            <else>
+                <if>
+                    <available file="${drupal.directory}" type="dir" />
+                    <then>
+                        <echo>The directory ${drupal.directory} exists.</echo>
+                    </then>
+                    <else>
+                        <echo>The directory ${drupal.directory} does not exist.</echo>
+                    </else>
+                </if>
+            </else>
         </if>
         <echo>Setting up a temporary Drupal environment</echo>
     </target>
