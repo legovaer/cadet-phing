@@ -45,7 +45,7 @@
                 </replaceregexp>
             </filterchain>
         </copy>
-        <exec command="mysql -u ${mysql.suname} -p${mysql.supassword} &lt; createDatabase_edited.sql" />
+        <exec command="mysql -u ${mysql.suname} -p${mysql.supassword} &lt; createDatabase_edited.sql" checkreturn="true"/>
         <echo>Created database ${instance.mysql.database}</echo>
 
 
