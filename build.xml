@@ -14,7 +14,7 @@
                 <echo>No Drupal version speicified. The latest available version, found on this server, will be used. (${drupal.directory})</echo>
             </then>
             <else>
-                <property name="drupal.directory" value="${drupal.install.dir}/${drupal.version}"/>
+                <property name="drupal.directory" value="${drupal.install.dir}/drupal-${drupal.version}"/>
                 <if>
                     <available file="${drupal.directory}" type="dir"/>
                     <then>
