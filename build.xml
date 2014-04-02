@@ -39,7 +39,7 @@
 
     <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
         <property name="drupal.username" value="admin"/>
-        <randomString name="drupal.password" lenght="10"/>
+        <randomString name="drupal.password" length="10"/>
 
         <drush command="site-install" assume="yes">
             <option name="account-name">admin</option>
