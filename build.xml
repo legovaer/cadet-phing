@@ -46,6 +46,7 @@
             </filterchain>
         </copy>
         <exec command="mysql -u${mysql.suname} -p${mysql.supassword} &lt; createDatabase_edited.sql"/>
+        <echo>mysql -u${mysql.suname} -p${mysql.supassword} &lt; createDatabase_edited.sql</echo>
         <echo>Created database ${instance.mysql.database}</echo>
 
 
