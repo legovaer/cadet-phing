@@ -18,14 +18,26 @@
                 <if>
                     <available file="${drupal.directory}" type="dir"/>
                     <then>
-                        <echo>The directory ${drupal.directory} exists.</echo>
+                        <echo>Drupal ${drupal.version} is available on the server.</echo>
                     </then>
                     <else>
-                        <echo>The directory ${drupal.directory} does not exist.</echo>
+                        <echo>Drupal ${drupal.version} is not available on the server. Starting download.</echo>
+                        <phingcall target="drush-download"/>
                     </else>
                 </if>
             </else>
         </if>
         <echo>Setting up a temporary Drupal environment</echo>
+    </target>
+
+    <target name="drush-download" depends="drush-init">
+        <drush command="dl" assume="yes">
+            <option name="destination">${drupal.install.dir}</option>
+            <param>drupal-${drupal.version}</param>
+        </drush>
+    </target>
+
+    <target name="drush-init">
+        <taskdef name="drush" classname="DrushTask" />
     </target>
 </project>
