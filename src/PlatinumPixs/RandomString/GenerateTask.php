@@ -57,11 +57,6 @@ class GenerateTask extends Task
     {
         $string = Generate::randomString($this->getStringType(), $this->getLength());
 
-        $this->project->log(
-            sprintf('Generated Random String: %s, Placing Under User Property: %s', $string, $this->getName()),
-            Project::MSG_INFO
-        );
-
         $this->project->setUserProperty($this->getName(), $string);
     }
 
