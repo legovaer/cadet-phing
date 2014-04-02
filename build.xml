@@ -2,9 +2,12 @@
 
 <project name="CADET" default="setup-database" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
-    <property file="default.properties"/>
 
-    <target name="debug">
+    <target name="init" depends="load-properties, get-drupal-version, install-drupal" unless="project.initialized">
+        <property name="project.initialized" value="true"/>
+    </target>
+
+    <target name="get-drupal-version">
         <exec command="ls ${drupal.install.dir} | sort -r | head -1" outputProperty="drupal.latest.version"/>
         <if>
             <equals arg1="${drupal.version}" arg2="" />
@@ -26,17 +29,51 @@
                 </if>
             </else>
         </if>
-        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
-        <echo>Setting up a temporary Drupal environment</echo>
-        <!--<phingcall target="setup-docroot"/>-->
-        <phingcall target="setup-database"/>
     </target>
 
-    <target name="setup-database">
-        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
+    <target name="load-properties">
+        <property file="default.properties"/>
+        <phingcall target="generate-hash">
+            <property name="hash.size" value="8"/>
+        </phingcall>
+        <property name="instance.name" value="${project.hash}"/>
+    </target>
+
+    <target name="generate-hash">
+        <if>
+            <equals arg1="${hash.size}" arg2="" />
+            <then>
+                <property name="hash.size" value="8"/>
+            </then>
+        </if>
+        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, ${hash.size})" returnProperty="project.hash"/>
+    </target>
+
+    <target name="install-drupal" depends="setup-docroot, setup-database, init">
+        <phingcall target="generate-hash">
+            <property name="hash.size" value="10"/>
+        </phingcall>
+
+        <property name="drupal.username" value="admin"/>
+        <property name="drupal.password" value="${project.hash}"/>
+
+        <drush command="site-install" assume="yes">
+            <option name="account-name">admin</option>
+            <option name="account-pass">${project.hash}</option>
+            <option name="site-name">CADET - ${instance.name}</option>
+            <option name="db-url">${drupal.db.url}</option>
+            <param>standard</param>
+        </drush>
+
+        <echo>Drupal has been installed.</echo>
+        <echo>Location: http://${instance.name}.${domain}</echo>
+        <echo>Username: ${drupal.username}</echo>
+        <echo>Password: ${drupal.password}</echo>
+    </target>
+
+    <target name="setup-database" depends="init">
         <property name="instance.mysql.database" value="CADET${instance.name}"/>
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 16)" returnProperty="instance.mysql.password"/>
-        <echo>${instance.mysql.password} instance pass</echo>
         <copy file="createDatabase.sql" tofile="createDatabase_edited.sql" overwrite="true">
             <filterchain>
                 <replaceregexp>
@@ -47,10 +84,7 @@
             </filterchain>
         </copy>
         <exec command="mysql -u ${mysql.suser} -p${mysql.supassword} &lt; createDatabase_edited.sql"/>
-        <echo>mysql -u ${mysql.suser} -p${mysql.supassword} &lt; createDatabase_edited.sql</echo>
-        <echo>Created database ${instance.mysql.database}</echo>
-
-
+        <property name="drupal.db.url" value="mysql://${instance.name}:${instance.mysql.password}@localhost/${instance.mysql.database}"/>
     </target>
 
     <target name="setup-docroot">
@@ -83,5 +117,10 @@
 
     <target name="drush-init">
         <taskdef name="drush" classname="DrushTask" />
+    </target>
+
+    <target name="clean" description="Clean up" depends="setup-database" unless="project.cleaned">
+        <delete file="createDatabase_edited.sql"/>
+        <property name="project.cleaned" value="true"/>
     </target>
 </project>
