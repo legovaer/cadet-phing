@@ -2,6 +2,13 @@
 
 <project name="CADET" default="debug" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <target name="debug">
+        <property name="drupal.version" value="" />
+        <if>
+            <equals arg1="${drupal.version}" arg2="" />
+            <then>
+                <echo>Version is empty</echo>
+            </then>
+        </if>
         <echo>Setting up a temporary Drupal environment</echo>
     </target>
 </project>
