@@ -29,13 +29,13 @@
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
         <echo>Setting up a temporary Drupal environment</echo>
         <!--<phingcall target="setup-docroot"/>-->
-        <echo>${instance.name} instance name</echo>
         <phingcall target="setup-database"/>
     </target>
 
     <target name="setup-database">
         <property name="instance.mysql.database" value="CADET${instance.name}"/>
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 16)" returnProperty="instance.mysql.password"/>
+        <echo>${instance.mysql.password} instance pass</echo>
         <copy file="createDatabase.sql" tofile="createDatabase_edited.sql" overwrite="true">
             <filterchain>
                 <replaceregexp>
