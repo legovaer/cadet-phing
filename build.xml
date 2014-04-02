@@ -38,6 +38,7 @@
         </phingcall>
         <property name="instance.name" value="${project.hash}"/>
         <echo>${instance.name}</echo>
+        <echo>${project.hash}</echo>
     </target>
 
     <target name="generate-hash">
