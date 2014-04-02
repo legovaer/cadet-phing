@@ -37,7 +37,11 @@
     <target name="setup-docroot">
         <property name="instance.domain" value="${instance.name}.${domain}" />
         <property name="instance.docroot" value="${docroot}/${instance.name}" />
-        <copy dir="${drupal.directory}" todir="${instance.docroot}" />
+        <copy todir="${instance.docroot}">
+            <fileset dir="${drupal.directory}">
+                <include>**</include>
+            </fileset>
+        </copy>
         <chown file="${instance.docroot}" user="nobody" group="nogroup" />
     </target>
 
