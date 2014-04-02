@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="CADET" default="setup-database" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
+<project name="CADET" default="init" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
 
     <target name="init" depends="load-properties, get-drupal-version, install-drupal" unless="project.initialized">
