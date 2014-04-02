@@ -49,10 +49,7 @@
                 <property name="hash.size" value="8"/>
             </then>
         </if>
-        <exec executable="php" outputProperty="project.hash">
-            <arg value="-r" />
-            <arg value="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, ${hash.size});"/>
-        </exec>
+        <exec command="cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1" outputProperty="project.hash"/>
         <echo>${project.hash} called from generate-hash</echo>
     </target>
 
