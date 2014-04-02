@@ -2,12 +2,7 @@
 
 <project name="CADET" default="setup-database" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
-    <property name="drupal.install.dir" value="/var/lib/drupal"/>
-    <property name="drupal.version" value="7.24" />
-    <property name="domain" value="cadet.captest.be"/>
-    <property name="docroot" value="/var/www/cadet"/>
-    <property name="mysql.suser" value="su"/>
-    <property name="mysql.supassword" value="pass"/>
+    <property file="default.properties"/>
 
     <target name="debug">
         <exec command="ls ${drupal.install.dir} | sort -r | head -1" outputProperty="drupal.latest.version"/>
@@ -38,10 +33,10 @@
     </target>
 
     <target name="setup-database">
-        <pdo url="mysql:host=localhost" encoding="utf8" userId="${mysql.suser}" password="${mysql.supassword}" onerror="abort">
-            CREATE DATABASE CADET${instance.name};
-            GRANT ALL ON CADET${instance.name}.* to ${instance.name}@localhost IDENTIFIED BY '${instance.dbpassword}';
-        </pdo>
+        <property name="instance.mysql.database" value="CADET${instance.name}"/>
+        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 16)" returnProperty="instance.mysql.password"/>
+        <exec command="CREATE DATABASE ${instance.mysql.database}; GRANT ALL ON ${instance.mysql.database}.* TO ${instance.name}@localhost IDENTIFIED BY '${instance.mysql.password}'; mysql --user=${mysql.suser} --password=${mysql.supassword}" checkreturn="true" />
+        <echo>Created database ${instance.mysql.database}</echo>
     </target>
 
     <target name="setup-docroot">
