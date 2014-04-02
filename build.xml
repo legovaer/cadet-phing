@@ -35,7 +35,7 @@
     <target name="setup-database">
         <property name="instance.mysql.database" value="CADET${instance.name}"/>
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 16)" returnProperty="instance.mysql.password"/>
-        <exec command="echo 'CREATE DATABASE ${instance.mysql.database}; GRANT ALL ON ${instance.mysql.database}.* TO ${instance.name}@localhost IDENTIFIED BY ${instance.mysql.password};' | mysql --user=${mysql.suser} --password=${mysql.supassword}" checkreturn="true" />
+        <exec command="echo &quot;CREATE DATABASE ${instance.mysql.database}; GRANT ALL ON ${instance.mysql.database}.* TO ${instance.name}@localhost IDENTIFIED BY '${instance.mysql.password};'&quot; | mysql --user=${mysql.suser} --password=${mysql.supassword}" checkreturn="true" />
         <echo>Created database ${instance.mysql.database}</echo>
     </target>
 
