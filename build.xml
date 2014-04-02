@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 
-<project name="CADET" default="debug" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
+<project name="CADET" default="setup-database" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
     <property name="drupal.install.dir" value="/var/lib/drupal"/>
     <property name="drupal.version" value="7.24" />
     <property name="domain" value="cadet.captest.be"/>
     <property name="docroot" value="/var/www/cadet"/>
+    <property name="mysql.suser" value="su"/>
+    <property name="mysql.supassword" value="pass"/>
 
     <target name="debug">
         <exec command="ls ${drupal.install.dir} | sort -r | head -1" outputProperty="drupal.latest.version"/>
@@ -32,6 +34,13 @@
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
         <echo>Setting up a temporary Drupal environment</echo>
         <phingcall target="setup-docroot"/>
+        <phingcall target="setup-database"/>
+    </target>
+
+    <target name="setup-database">
+        <pdo url="mysql:host=localhost" encoding="utf8" userId="${mysql.susername}" password="${mysql.supassword}" onerror="abort">
+            SHOW DATABASES;
+        </pdo>
     </target>
 
     <target name="setup-docroot">
@@ -43,6 +52,16 @@
             </fileset>
         </copy>
         <chown file="${instance.docroot}" user="nobody" group="nogroup" />
+        <copy file="virtualhost.conf" tofile="/etc/apache2/site-available/CADET-${instance.name}" overwrite="true">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="####" replace="${instance.domain}" ignoreCase="true" />
+                    <regexp pattern="@@@@" replace="${instance.docroot}" ignoreCase="true" />
+                </replaceregexp>
+            </filterchain>
+        </copy>
+        <exec command="a2ensite CADET-${instance.name}" />
+        <exec command="service apache2 reload" />
     </target>
 
     <target name="drush-download" depends="drush-init">
