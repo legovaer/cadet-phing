@@ -33,6 +33,7 @@
     </target>
 
     <target name="setup-database">
+        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
         <property name="instance.mysql.database" value="CADET${instance.name}"/>
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 16)" returnProperty="instance.mysql.password"/>
         <echo>${instance.mysql.password} instance pass</echo>
