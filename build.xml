@@ -35,9 +35,7 @@
         <taskdef name="randomString" classname="src.PlatinumPixs.RandomString.GenerateTask" />
         <property file="default.properties"/>
         <property name="project-hash" value=""/>
-        <phingcall target="generate-hash">
-            <property name="hash.size" value="8"/>
-        </phingcall>
+
         <property name="instance.name" value="${project.hash}"/>
         <echo>${instance.name}</echo>
         <echo>${project.hash}</echo>
