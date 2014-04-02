@@ -33,13 +33,14 @@
         </if>
         <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 8)" returnProperty="instance.name"/>
         <echo>Setting up a temporary Drupal environment</echo>
-        <phingcall target="setup-docroot"/>
+        <!--<phingcall target="setup-docroot"/>-->
         <phingcall target="setup-database"/>
     </target>
 
     <target name="setup-database">
         <pdo url="mysql:host=localhost" encoding="utf8" userId="${mysql.suser}" password="${mysql.supassword}" onerror="abort">
-            SHOW DATABASES;
+            CREATE DATABASE CADET${instance.name};
+            GRANT ALL ON CADET${instance.name}.* to ${instance.name}@localhost IDENTIFIED BY '${instance.dbpassword}';
         </pdo>
     </target>
 
