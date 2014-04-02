@@ -38,7 +38,7 @@
     </target>
 
     <target name="setup-database">
-        <pdo url="mysql:host=localhost" encoding="utf8" userId="${mysql.susername}" password="${mysql.supassword}" onerror="abort">
+        <pdo url="mysql:host=localhost" encoding="utf8" userId="${mysql.suser}" password="${mysql.supassword}" onerror="abort">
             SHOW DATABASES;
         </pdo>
     </target>
