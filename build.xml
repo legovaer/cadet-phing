@@ -32,39 +32,18 @@
     </target>
 
     <target name="load-properties">
-        <taskdef name="randomString" classname="src.PlatinumPixs.RandomString.GenerateTask" />
         <property file="default.properties"/>
-        <property name="project-hash" value=""/>
-
-        <property name="instance.name" value="${project.hash}"/>
-        <echo>${instance.name}</echo>
-        <echo>${project.hash}</echo>
-        <randomString name="variableName" length="8" stringType="uppercase_numeric" />
-        <echo>${variableName} varname</echo>
-    </target>
-
-    <target name="generate-hash">
-        <if>
-            <equals arg1="${hash.size}" arg2="" />
-            <then>
-                <property name="hash.size" value="8"/>
-            </then>
-        </if>
-        <exec command="cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1" outputProperty="project.hash"/>
-        <echo>${project.hash} called from generate-hash</echo>
+        <taskdef name="randomString" classname="src.PlatinumPixs.RandomString.GenerateTask" />
+        <randomString name="instance.name" length="8" stringType="lowercase_numeric" />
     </target>
 
     <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
-        <phingcall inheritRefs="true" target="generate-hash">
-            <property name="hash.size" value="10"/>
-        </phingcall>
-
         <property name="drupal.username" value="admin"/>
-        <property name="drupal.password" value="${project.hash}"/>
+        <randomString name="drupal.password" lenght="10"/>
 
         <drush command="site-install" assume="yes">
             <option name="account-name">admin</option>
-            <option name="account-pass">${project.hash}</option>
+            <option name="account-pass">${drupal.password}</option>
             <option name="site-name">CADET - ${instance.name}</option>
             <option name="db-url">${drupal.db.url}</option>
             <param>standard</param>
@@ -78,7 +57,7 @@
 
     <target name="setup-database" depends="load-properties">
         <property name="instance.mysql.database" value="CADET${instance.name}"/>
-        <php expression="substr(str_shuffle(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ),0, 1) . substr(str_shuffle(aBcEeFgHiJkLmNoPqRstUvWxYz0123456789),0, 16)" returnProperty="instance.mysql.password"/>
+        <randomString name="instance.mysql.password" length="15" />
         <copy file="createDatabase.sql" tofile="createDatabase_edited.sql" overwrite="true">
             <filterchain>
                 <replaceregexp>
