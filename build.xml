@@ -34,10 +34,11 @@
     <target name="load-properties">
         <property file="default.properties"/>
         <taskdef name="randomString" classname="src.PlatinumPixs.RandomString.GenerateTask" />
+        <taskdef name="drush" classname="src.phingdrushtask.DrushTask" />
         <randomString name="instance.name" length="8" stringType="lowercase_numeric" />
     </target>
 
-    <target name="install-drupal" depends="setup-docroot, setup-database, load-properties, drush-init">
+    <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
         <property name="drupal.username" value="admin"/>
         <property name="drupal.sitename" value="CADET - ${instance.name}" />
         <randomString name="drupal.password" length="10"/>
@@ -93,15 +94,11 @@
         <exec command="service apache2 reload" />
     </target>
 
-    <target name="drush-download" depends="drush-init">
+    <target name="drush-download">
         <drush command="dl" assume="yes">
             <option name="destination">${drupal.install.dir}</option>
             <param>drupal-${drupal.version}</param>
         </drush>
-    </target>
-
-    <target name="drush-init">
-        <taskdef name="drush" classname="DrushTask" />
     </target>
 
     <target name="clean" description="Clean up" depends="setup-database" unless="project.cleaned">
