@@ -48,7 +48,7 @@
             <option name="account-pass">${drupal.password}</option>
             <option name="db-url">${drupal.db.url}</option>
             <option name="site-name" value="${drupal.sitename}" />
-            <param>expert</param>
+            <param>standard</param>
         </drush>
 
         <echo>Drupal has been installed.</echo>
