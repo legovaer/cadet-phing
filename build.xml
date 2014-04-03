@@ -83,8 +83,8 @@
         <copy file="virtualhost.conf" tofile="/etc/apache2/sites-available/CADET-${instance.name}" overwrite="true">
             <filterchain>
                 <replaceregexp>
-                    <regexp pattern="####" replace="${instance.domain}" ignoreCase="true" />
-                    <regexp pattern="@@@@" replace="${instance.docroot}" ignoreCase="true" />
+                    <regexp pattern="###" replace="${instance.domain}" ignoreCase="true" />
+                    <regexp pattern="@@@" replace="${instance.docroot}" ignoreCase="true" />
                 </replaceregexp>
             </filterchain>
         </copy>
