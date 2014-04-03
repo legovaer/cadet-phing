@@ -3,7 +3,7 @@
 <project name="CADET" default="init" basedir="." description="This is the buildfile used for building temporary Drupal environments.">
     <!-- General properties -->
 
-    <target name="init" depends="load-properties, get-drupal-version, install-drupal" unless="project.initialized">
+    <target name="init" depends="load-properties, get-drupal-version, install-drupal, clean" unless="project.initialized">
         <property name="project.initialized" value="true"/>
     </target>
 
