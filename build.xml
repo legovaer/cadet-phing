@@ -45,7 +45,7 @@
             <param>standard</param>
             <option name="account-name">admin</option>
             <option name="account-pass">${drupal.password}</option>
-            <option name="site-name">CADET - ${instance.name}</option>
+            <!--<option name="site-name">CADET - ${instance.name}</option>-->
             <option name="db-url">${drupal.db.url}</option>
         </drush>
 
