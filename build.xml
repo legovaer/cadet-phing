@@ -40,7 +40,7 @@
 
     <target name="install-drupal" depends="setup-docroot, setup-database, load-properties">
         <property name="drupal.username" value="admin"/>
-        <property name="drupal.sitename" value="CADET - ${instance.name}" />
+        <property name="drupal.sitename" value="&quot;CADET - ${instance.name}&quot;" />
         <randomString name="drupal.password" length="10"/>
 
         <drush command="site-install" assume="yes" root="${instance.docroot}">
