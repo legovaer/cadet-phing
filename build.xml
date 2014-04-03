@@ -42,11 +42,11 @@
         <randomString name="drupal.password" length="10"/>
 
         <drush command="site-install" assume="yes" root="${instance.docroot}">
-            <param>standard</param>
-            <option name="account-name">admin</option>
+           <option name="account-name">admin</option>
             <option name="account-pass">${drupal.password}</option>
-            <option name="site-name" value="CADET - ${instance.name}"/>
             <option name="db-url">${drupal.db.url}</option>
+            <option name="site-name" value="CADET - ${instance.name}" />
+            <param>standard</param>
         </drush>
 
         <echo>Drupal has been installed.</echo>
