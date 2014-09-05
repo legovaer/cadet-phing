@@ -55,6 +55,11 @@
         <echo>Location: http://${instance.name}.${domain}</echo>
         <echo>Username: ${drupal.username}</echo>
         <echo>Password: ${drupal.password}</echo>
+        
+        <exec command="export URL=${instance.name}.${domain}"/>
+        <exec command="export USERNAME=${drupal.username}"/>
+        <exec command="export PASSWORD=${drupal.password}"/>
+        
     </target>
 
     <target name="setup-database" depends="load-properties">
