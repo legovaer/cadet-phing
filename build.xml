@@ -56,7 +56,7 @@
         <echo>Username: ${drupal.username}</echo>
         <echo>Password: ${drupal.password}</echo>
         
-        <mail tolist="levi.govaerts@capgemini.com" from"no-reply@capgemini.com" subject="Testmail">test</mail>
+        <mail tolist="levi.govaerts@capgemini.com" from="no-reply@capgemini.com" subject="Testmail">test</mail>
         
     </target>
 
