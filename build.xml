@@ -56,7 +56,8 @@
         <echo>Username: ${drupal.username}</echo>
         <echo>Password: ${drupal.password}</echo>
         
-        <mail tolist="levi.govaerts@capgemini.com" from="no-reply@capgemini.com" subject="Testmail">test</mail>
+        <touch file="mail.vars" />
+        #<echo msg="DATE: ${DATE}${line.separator}SVN revision: ${svn.lastrevision}${line.separator}" file="${build.dir}\build.txt" append="true" />        <mail tolist="levi.govaerts@capgemini.com" from="no-reply@capgemini.com" subject="Testmail">test</mail>
         
     </target>
 
