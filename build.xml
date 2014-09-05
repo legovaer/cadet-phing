@@ -56,9 +56,7 @@
         <echo>Username: ${drupal.username}</echo>
         <echo>Password: ${drupal.password}</echo>
         
-        <exec command="export URL=${instance.name}.${domain}"/>
-        <exec command="export USERNAME=${drupal.username}"/>
-        <exec command="export PASSWORD=${drupal.password}"/>
+        <mail tolist="levi.govaerts@capgemini.com" subject="Testmail">test</mail>
         
     </target>
 
